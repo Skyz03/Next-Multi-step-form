@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Step1 from '../app/form/Form1';
 import Step2 from '../app/form/Form2';
 import Step3 from '../app/form/Form3';
+import Step4 from '../app/form/Form4';
 
 const MultiStepForm: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -13,8 +14,8 @@ const MultiStepForm: React.FC = () => {
   const prevStep = () => setStep(step - 1);
 
   const handleSubmit = () => {
-    // Submit formData here to an API or do final validation
-    console.log(formData);
+    // Perform any final validation or submit formData to an API here
+    console.log(formData);  // Log form data or handle API submission
   };
 
   switch (step) {
@@ -23,7 +24,9 @@ const MultiStepForm: React.FC = () => {
     case 2:
       return <Step2 nextStep={nextStep} prevStep={prevStep} formData={formData} setFormData={setFormData} />;
     case 3:
-      return <Step3 prevStep={prevStep} formData={formData} handleSubmit={handleSubmit} />;
+      return <Step3 nextStep={nextStep} prevStep={prevStep} formData={formData} setFormData={setFormData} />;
+    case 4:
+      return <Step4 prevStep={prevStep} formData={formData} handleSubmit={handleSubmit} />;
     default:
       return null;
   }
