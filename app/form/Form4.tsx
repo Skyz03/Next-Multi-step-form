@@ -5,22 +5,25 @@ import React, { useState } from 'react';
 type Step4Props = {
     prevStep: () => void;
     formData: {
-        plan: string;       // Selected plan
-        planPrice: number;  // Price of the selected plan
-        addons: { [key: string]: number }; // Selected add-ons and their prices
+        plan: string;
+        billing: 'monthly' | 'yearly';
+        planPrice: number;
+        addOns: { name: string; price: number }[]; // Updated format for add-ons
     };
-    handleSubmit: () => void;  // This function will be called to submit the form
+    handleSubmit: () => void;  // Function to submit the form
 };
 
 const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
     const [submitted, setSubmitted] = useState(false);
 
+    // Calculate the total price including add-ons
     const calculateTotal = () => {
         const planPrice = formData.planPrice || 0;
-        const addonsTotal = Object.values(formData.addons || {}).reduce((acc, price) => acc + price, 0);
+        const addonsTotal = formData.addOns.reduce((acc, { price }) => acc + price, 0);
         return planPrice + addonsTotal;
     };
 
+    // Handle form submission
     const onSubmit = () => {
         handleSubmit();
         setSubmitted(true);
@@ -46,8 +49,8 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
             <p className="text-lg mb-6">Double-check everything looks OK before confirming.</p>
 
             <div className="bg-gray-100 p-4 rounded-lg mb-6">
-                <h3 className="text-lg font-semibold mb-2">{formData.plan} ({formData.planPrice === 9 ? 'Monthly' : 'Yearly'})</h3>
-                <p className="text-xl font-bold mb-4">${formData.planPrice}/mo</p>
+                <h3 className="text-lg font-semibold mb-2">{formData.plan} ({formData.billing === 'monthly' ? 'Monthly' : 'Yearly'})</h3>
+                <p className="text-xl font-bold mb-4">${formData.planPrice}</p>
                 <button
                     onClick={() => console.log('Change plan button clicked')}  // Add functionality for changing plan
                     className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
@@ -58,10 +61,10 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
 
             <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-2">Add-Ons</h3>
-                {Object.entries(formData.addons || {}).map(([addon, price]) => (
-                    <div key={addon} className="flex justify-between mb-2">
-                        <span>{addon}</span>
-                        <span>+${price}/mo</span>
+                {formData.addOns.map(({ name, price }) => (
+                    <div key={name} className="flex justify-between mb-2">
+                        <span>{name}</span>
+                        <span>+${price}</span>
                     </div>
                 ))}
             </div>
