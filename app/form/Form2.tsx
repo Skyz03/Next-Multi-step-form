@@ -63,7 +63,7 @@ export default function Step2({ nextStep, prevStep, formData, setFormData }: Ste
           className={`border ${plan === 'Arcade' ? 'border-blue-500' : 'border-gray-300'} p-4 rounded cursor-pointer`}
           onClick={() => handlePlanChange('Arcade')}
         >
-          <span role="img" aria-label="Arcade Icon" className="text-2xl">🎮</span>
+          <img src="/assets/images/icon-arcade.svg" alt="Arcade Icon" className="w-10 h-10" />
           <h4 className="text-xl font-semibold mt-2">Arcade</h4>
           <p className="text-gray-500">${prices.Arcade}/mo</p>
         </div>
@@ -73,7 +73,7 @@ export default function Step2({ nextStep, prevStep, formData, setFormData }: Ste
           className={`border ${plan === 'Advanced' ? 'border-blue-500' : 'border-gray-300'} p-4 rounded cursor-pointer`}
           onClick={() => handlePlanChange('Advanced')}
         >
-          <span role="img" aria-label="Advanced Icon" className="text-2xl">🚀</span>
+          <img src="/assets/images/icon-advanced.svg" alt="Advanced Icon" className="w-10 h-10" />
           <h4 className="text-xl font-semibold mt-2">Advanced</h4>
           <p className="text-gray-500">${prices.Advanced}/mo</p>
         </div>
@@ -83,7 +83,7 @@ export default function Step2({ nextStep, prevStep, formData, setFormData }: Ste
           className={`border ${plan === 'Pro' ? 'border-blue-500' : 'border-gray-300'} p-4 rounded cursor-pointer`}
           onClick={() => handlePlanChange('Pro')}
         >
-          <span role="img" aria-label="Pro Icon" className="text-2xl">💼</span>
+          <img src="/assets/images/icon-pro.svg" alt="Pro Icon" className="w-10 h-10" /> 
           <h4 className="text-xl font-semibold mt-2">Pro</h4>
           <p className="text-gray-500">${prices.Pro}/mo</p>
         </div>

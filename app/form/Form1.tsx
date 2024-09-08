@@ -1,68 +1,88 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
 
 type StepProps = {
-  nextStep: () => void; // Function to move to the next step
-  formData: any; // Current form data
-  setFormData: (data: any) => void; // Function to update form data
+  nextStep: () => void;
+  formData: any;
+  setFormData: (data: any) => void;
+};
+
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
 };
 
 export default function Step1({ nextStep, formData, setFormData }: StepProps) {
-  // Local state for each input field
-  const [name, setName] = useState(formData.name || '');
-  const [email, setEmail] = useState(formData.email || '');
-  const [phone, setPhone] = useState(formData.phone || '');
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-  // Handle moving to the next step and saving form data
-  const handleNext = () => {
-    setFormData({ ...formData, name, email, phone }); // Update form data with current step's values
-    nextStep(); // Move to the next step
+  const onSubmit = (data: FormData) => {
+    setFormData({ ...formData, ...data });
+    nextStep();
   };
 
   return (
-    <div className="p-6 bg-white shadow-md rounded-lg">
-      {/* Header for the step */}
-      <h1 className="text-2xl font-bold mb-4">Personal Info</h1>
-      <h2 className="text-lg mb-6">Please provide your name, email & phone number</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="p-6 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold mb-4 text-marine_blue">Personal Info</h1>
+      <h2 className="text-lg mb-6 text-cool_gray">Please provide your name, email address, and phone number.</h2>
 
       {/* Input for Name */}
-      <label className="block mb-2 font-medium">Name</label>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)} // Update local state on input change
+      <label className="block mb-2 font-medium text-marine_blue">Name</label>
+      <InputText
+        {...register('name', { required: 'Name is required' })}
+        defaultValue={formData.name}
         placeholder="Enter your name"
-        className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
+        className={`w-full p-4 mb-2 border font-bold text-marine_blue border-cool_gray rounded-md focus:outline-none focus:ring-2 
+          ${errors.name ? 'border-strawberry_red' : 'focus:ring-marine_blue hover:border-purplish_blue'}`}
       />
+      {errors.name && <p className="text-strawberry_red text-sm">{errors.name.message}</p>}
 
       {/* Input for Email */}
-      <label className="block mb-2 font-medium">Email</label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)} // Update local state on input change
+      <label className="block mb-2 font-medium text-marine_blue">Email Address</label>
+      <InputText
+        {...register('email', {
+          required: 'Email is required',
+          pattern: {
+            value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+            message: 'Please enter a valid email address',
+          }
+        })}
+        defaultValue={formData.email}
         placeholder="Enter your email"
-        className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
+        className={`w-full p-4 mb-2 border font-bold text-marine_blue border-cool_gray rounded-md focus:outline-none focus:ring-2 
+          ${errors.email ? 'border-strawberry_red' : 'focus:ring-marine_blue hover:border-purplish_blue'}`}
       />
+      {errors.email && <p className="text-strawberry_red text-sm">{errors.email.message}</p>}
 
       {/* Input for Phone */}
-      <label className="block mb-2 font-medium">Phone</label>
-      <input
-        type="tel"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)} // Update local state on input change
+      <label className="block mb-2 font-medium text-marine_blue">Phone</label>
+      <InputText
+        {...register('phone', {
+          required: 'Phone is required',
+          pattern: {
+            value: /^[0-9]{10}$/,
+            message: 'Please enter a valid phone number',
+          }
+        })}
+        defaultValue={formData.phone}
         placeholder="Enter your phone number"
-        className="w-full mb-6 p-2 border border-gray-300 rounded-lg"
+        className={`w-full p-4 mb-2 border font-bold text-marine_blue border-cool_gray rounded-md focus:outline-none focus:ring-2 
+          ${errors.phone ? 'border-strawberry_red' : 'focus:ring-marine_blue hover:border-purplish_blue'}`}
       />
+      {errors.phone && <p className="text-strawberry_red text-sm">{errors.phone.message}</p>}
 
-      {/* Button to proceed to the next step */}
-      <button
-        onClick={handleNext}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-      >
-        Next
-      </button>
-    </div>
+      {/* Button aligned to the right */}
+      <div className="flex justify-end mt-6">
+        <Button
+          type="submit"
+          label="Next"
+          className="bg-marine_blue text-white font-bold py-2 px-4 rounded-md hover:bg-purplish_blue transition"
+        />
+      </div>
+    </form>
   );
 }
