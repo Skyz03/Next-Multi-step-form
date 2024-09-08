@@ -1,6 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { InputSwitch } from 'primereact/inputswitch';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
 
 // Define a type for the plan names
 type PlanType = 'Arcade' | 'Advanced' | 'Pro';
@@ -18,7 +22,13 @@ const monthlyPrices: Record<PlanType, number> = { Arcade: 9, Advanced: 12, Pro: 
 const yearlyPrices: Record<PlanType, number> = { Arcade: 90, Advanced: 120, Pro: 150 };
 
 export default function Step2({ nextStep, prevStep, formData, setFormData }: StepProps) {
-  // Local state for plan, billing, and price
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    defaultValues: {
+      plan: formData.plan || 'Arcade',
+      billing: formData.billing || 'monthly',
+    }
+  });
+
   const [billing, setBilling] = useState<'monthly' | 'yearly'>(formData.billing || 'monthly');
   const [plan, setPlan] = useState<PlanType>(formData.plan || 'Arcade');
   const [price, setPrice] = useState<number>(getPrice(plan, billing));
@@ -34,102 +44,86 @@ export default function Step2({ nextStep, prevStep, formData, setFormData }: Ste
     setPrice(getPrice(newPlan, billing));
   };
 
-  // Update form data and proceed to the next step
-  const handleNext = () => {
-    setFormData({ ...formData, plan, billing, planPrice: price }); // Merge current form data with step-specific values
-    nextStep(); // Move to the next step
-  };
-
-  // Handle changes in billing frequency
-  const handleBillingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newBilling = e.target.value as 'monthly' | 'yearly';
+  // Handle changes in billing frequency with InputSwitch
+  const handleBillingChange = (checked: boolean) => {
+    const newBilling = checked ? 'yearly' : 'monthly';
     setBilling(newBilling);
-    setPrice(getPrice(plan, newBilling)); // Update price based on new billing frequency
+    setValue('billing', newBilling); // Update react-hook-form state
+    setPrice(getPrice(plan, newBilling));
   };
 
-  // Determine the prices to display based on selected billing frequency
-  const prices = billing === 'monthly' ? monthlyPrices : yearlyPrices;
+  // Handle form submission
+  const onSubmit = (data: { plan: PlanType; billing: 'monthly' | 'yearly' }) => {
+    setFormData({ ...formData, plan: data.plan, billing: data.billing, planPrice: price });
+    nextStep();
+  };
 
   return (
-    <div className="p-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="p-6 bg-white shadow-md rounded-lg">
       {/* Header for the plan selection */}
-      <h2 className="text-2xl font-bold mb-2">Select Your Plan</h2>
-      <h3 className="text-lg mb-4">You have the option of monthly & yearly billing</h3>
+      <h2 className="text-2xl font-bold mb-2 text-marine_blue">Select Your Plan</h2>
+      <h3 className="text-lg mb-4 text-cool_gray">You have the option of monthly & yearly billing</h3>
 
       {/* Plan selection options */}
       <div className="flex gap-4 mb-6">
         {/* Plan option for Arcade */}
-        <div
-          className={`border ${plan === 'Arcade' ? 'border-blue-500' : 'border-gray-300'} p-4 rounded cursor-pointer`}
+        <Card
+          className={`cursor-pointer p-4 rounded ${plan === 'Arcade' ? 'border-2 border-marine_blue' : 'border'}`}
           onClick={() => handlePlanChange('Arcade')}
         >
-          <span role="img" aria-label="Arcade Icon" className="text-2xl">🎮</span>
-          <h4 className="text-xl font-semibold mt-2">Arcade</h4>
-          <p className="text-gray-500">${prices.Arcade}/mo</p>
-        </div>
+          <img src="/assets/images/icon-arcade.svg" alt="Arcade Icon" className="w-10 h-10" />
+          <h4 className="text-xl font-semibold mt-2 text-marine_blue">Arcade</h4>
+          <p className="text-cool_gray">${billing === 'monthly' ? monthlyPrices.Arcade : yearlyPrices.Arcade}/mo</p>
+        </Card>
 
         {/* Plan option for Advanced */}
-        <div
-          className={`border ${plan === 'Advanced' ? 'border-blue-500' : 'border-gray-300'} p-4 rounded cursor-pointer`}
+        <Card
+          className={`cursor-pointer p-4 rounded ${plan === 'Advanced' ? 'border-2 border-marine_blue' : 'border'}`}
           onClick={() => handlePlanChange('Advanced')}
         >
-          <span role="img" aria-label="Advanced Icon" className="text-2xl">🚀</span>
-          <h4 className="text-xl font-semibold mt-2">Advanced</h4>
-          <p className="text-gray-500">${prices.Advanced}/mo</p>
-        </div>
+          <img src="/assets/images/icon-advanced.svg" alt="Advanced Icon" className="w-10 h-10" />
+          <h4 className="text-xl font-semibold mt-2 text-marine_blue">Advanced</h4>
+          <p className="text-cool_gray">${billing === 'monthly' ? monthlyPrices.Advanced : yearlyPrices.Advanced}/mo</p>
+        </Card>
 
         {/* Plan option for Pro */}
-        <div
-          className={`border ${plan === 'Pro' ? 'border-blue-500' : 'border-gray-300'} p-4 rounded cursor-pointer`}
+        <Card
+          className={`cursor-pointer p-4 rounded ${plan === 'Pro' ? 'border-2 border-marine_blue' : 'border'}`}
           onClick={() => handlePlanChange('Pro')}
         >
-          <span role="img" aria-label="Pro Icon" className="text-2xl">💼</span>
-          <h4 className="text-xl font-semibold mt-2">Pro</h4>
-          <p className="text-gray-500">${prices.Pro}/mo</p>
-        </div>
+          <img src="/assets/images/icon-pro.svg" alt="Pro Icon" className="w-10 h-10" />
+          <h4 className="text-xl font-semibold mt-2 text-marine_blue">Pro</h4>
+          <p className="text-cool_gray">${billing === 'monthly' ? monthlyPrices.Pro : yearlyPrices.Pro}/mo</p>
+        </Card>
       </div>
 
-      {/* Billing frequency options */}
-      <div className="mb-6">
-        <label className="mr-4 flex items-center">
-          <input
-            type="radio"
-            name="billing"
-            value="monthly"
-            checked={billing === 'monthly'}
-            onChange={handleBillingChange}
-            className="mr-2"
-          />
-          Monthly
-        </label>
-        <label className="flex items-center">
-          <input
-            type="radio"
-            name="billing"
-            value="yearly"
-            checked={billing === 'yearly'}
-            onChange={handleBillingChange}
-            className="mr-2"
-          />
-          Yearly
-        </label>
+      {/* Billing frequency options using InputSwitch */}
+      <div className="mb-6 flex items-center">
+        <label className="mr-4 text-marine_blue">Monthly</label>
+        <InputSwitch
+          checked={billing === 'yearly'}
+          onChange={(e) => handleBillingChange(e.value)}
+        />
+        <label className="ml-4 text-marine_blue">Yearly</label>
       </div>
+
+      {/* Validation message for billing */}
+      {errors.billing && <p className="text-strawberry_red">Please select a billing frequency</p>}
 
       {/* Navigation buttons */}
-      <div className="flex justify-between">
-        <button
+      <div className="flex justify-between mt-6">
+        <Button
+          type="button"
           onClick={prevStep}
+          label="Back"
           className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition"
-        >
-          Back
-        </button>
-        <button
-          onClick={handleNext}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        >
-          Next
-        </button>
+        />
+        <Button
+          type="submit"
+          label="Next"
+          className="bg-marine_blue text-white px-4 py-2 rounded hover:bg-purplish_blue transition"
+        />
       </div>
-    </div>
+    </form>
   );
 }
