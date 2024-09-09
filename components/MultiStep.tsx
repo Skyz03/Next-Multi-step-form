@@ -68,12 +68,12 @@ const MultiStepForm: React.FC = () => {
   }
 
   return (
-    <div className='flex items-center justify-center min-h-screen bg-gray-100 p-4'>
+    <>
       {/* Container for the form */}
-      <div className='w-full max-w-lg bg-white rounded-lg shadow-md p-6'>
+      <div>
         {stepContent} {/* Render the current step's content */}
       </div>
-    </div>
+    </>
   )
 }
 
