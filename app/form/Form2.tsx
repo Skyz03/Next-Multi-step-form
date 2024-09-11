@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { InputSwitch } from 'primereact/inputswitch';
-import { Button } from 'primereact/button';
-import { Card } from 'primereact/card';
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { InputSwitch } from 'primereact/inputswitch'
+import { Button } from 'primereact/button'
+import { Card } from 'primereact/card'
 import { FormHeading } from '@components/atoms'
 
 const plans = [
@@ -29,121 +29,168 @@ const plans = [
     imgSrc: '/assets/images/icon-pro.svg',
     altText: 'Pro Icon',
   },
-];
+]
 // Define a type for the plan names
-type PlanType = 'Arcade' | 'Advanced' | 'Pro';
+type PlanType = 'Arcade' | 'Advanced' | 'Pro'
 
 // Define the StepProps type
 type StepProps = {
-  nextStep: () => void; // Function to move to the next step
-  prevStep: () => void; // Function to move to the previous step
-  formData: { plan?: PlanType; billing?: 'monthly' | 'yearly'; planPrice?: number }; // Current form data
-  setFormData: (data: { plan?: PlanType; billing?: 'monthly' | 'yearly'; planPrice?: number }) => void; // Function to update form data
-};
+  nextStep: () => void // Function to move to the next step
+  prevStep: () => void // Function to move to the previous step
+  formData: {
+    plan?: PlanType
+    billing?: 'monthly' | 'yearly'
+    planPrice?: number
+  } // Current form data
+  setFormData: (data: {
+    plan?: PlanType
+    billing?: 'monthly' | 'yearly'
+    planPrice?: number
+  }) => void // Function to update form data
+}
 
 // Define pricing plans with type
-const monthlyPrices: Record<PlanType, number> = { Arcade: 9, Advanced: 12, Pro: 15 };
-const yearlyPrices: Record<PlanType, number> = { Arcade: 90, Advanced: 120, Pro: 150 };
+const monthlyPrices: Record<PlanType, number> = {
+  Arcade: 9,
+  Advanced: 12,
+  Pro: 15,
+}
+const yearlyPrices: Record<PlanType, number> = {
+  Arcade: 90,
+  Advanced: 120,
+  Pro: 150,
+}
 
-export default function Step2({ nextStep, prevStep, formData, setFormData }: StepProps) {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+export default function Step2({
+  nextStep,
+  prevStep,
+  formData,
+  setFormData,
+}: StepProps) {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       plan: formData.plan || 'Arcade',
       billing: formData.billing || 'monthly',
-    }
-  });
+    },
+  })
 
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>(formData.billing || 'monthly');
-  const [plan, setPlan] = useState<PlanType>(formData.plan || 'Arcade');
-  const [price, setPrice] = useState<number>(getPrice(plan, billing));
+  const [billing, setBilling] = useState<'monthly' | 'yearly'>(
+    formData.billing || 'monthly',
+  )
+  const [plan, setPlan] = useState<PlanType>(formData.plan || 'Arcade')
+  const [price, setPrice] = useState<number>(getPrice(plan, billing))
 
   // Get price based on plan and billing
   function getPrice(plan: PlanType, billing: 'monthly' | 'yearly'): number {
-    return billing === 'monthly' ? monthlyPrices[plan] : yearlyPrices[plan];
+    return billing === 'monthly' ? monthlyPrices[plan] : yearlyPrices[plan]
   }
 
   // Update plan and price
   const handlePlanChange = (newPlan: PlanType) => {
-    setPlan(newPlan);
-    setPrice(getPrice(newPlan, billing));
-  };
+    setPlan(newPlan)
+    setPrice(getPrice(newPlan, billing))
+  }
 
   // Handle changes in billing frequency with InputSwitch
   const handleBillingChange = (checked: boolean) => {
-    const newBilling = checked ? 'yearly' : 'monthly';
-    setBilling(newBilling);
-    setValue('billing', newBilling); // Update react-hook-form state
-    setPrice(getPrice(plan, newBilling));
-  };
+    const newBilling = checked ? 'yearly' : 'monthly'
+    setBilling(newBilling)
+    setValue('billing', newBilling) // Update react-hook-form state
+    setPrice(getPrice(plan, newBilling))
+  }
 
   // Handle form submission
-  const onSubmit = (data: { plan: PlanType; billing: 'monthly' | 'yearly' }) => {
-    setFormData({ ...formData, plan: data.plan, billing: data.billing, planPrice: price });
-    nextStep();
-  };
+  const onSubmit = (data: {
+    plan: PlanType
+    billing: 'monthly' | 'yearly'
+  }) => {
+    setFormData({
+      ...formData,
+      plan: data.plan,
+      billing: data.billing,
+      planPrice: price,
+    })
+    nextStep()
+  }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-20 h-full bg-white rounded-lg"
+      className='flex flex-col gap-20 h-full bg-white rounded-lg'
     >
       {/* Header for the plan selection */}
-      <div className="flex flex-col gap-2">
+      <div className='flex flex-col gap-2'>
         <FormHeading
           text='Select Your Plan'
           infoText='You have the option of monthly or yearly billing'
         />
         {/* Plan selection options */}
-        <div className="flex gap-4">
+        <div className='flex gap-4'>
           {plans.map((planOption) => (
             <Card
               key={planOption.name}
-              className={`cursor-pointer min-w-40 p-4 rounded-md hover:border-marine_blue ${plan === planOption.name ? 'border-2 border-marine_blue' : 'border border-gray-300'
-                }`}
+              className={`cursor-pointer min-w-40 p-4 rounded-md hover:border-marine_blue ${
+                plan === planOption.name
+                  ? 'border-2 border-marine_blue'
+                  : 'border border-gray-300'
+              }`}
               onClick={() => handlePlanChange(planOption.name as PlanType)}
             >
-              <img src={planOption.imgSrc} alt={planOption.altText} className="w-10 h-10 mb-2" />
-              <h4 className="text-xl font-semibold text-marine_blue">{planOption.name}</h4>
-              <p className="text-cool_gray">
-                ${billing === 'monthly' ? planOption.priceMonthly : planOption.priceYearly}/mo
+              <img
+                src={planOption.imgSrc}
+                alt={planOption.altText}
+                className='w-10 h-10 mb-2'
+              />
+              <h4 className='text-xl font-semibold text-marine_blue'>
+                {planOption.name}
+              </h4>
+              <p className='text-cool_gray'>
+                $
+                {billing === 'monthly'
+                  ? planOption.priceMonthly
+                  : planOption.priceYearly}
+                /mo
               </p>
             </Card>
           ))}
         </div>
 
-
         {/* Billing frequency options using InputSwitch */}
-        <div className="flex items-center justify-center gap-4 bg-alabaster p-4 mt-4">
-          <label className="text-marine_blue">Monthly</label>
+        <div className='flex items-center justify-center gap-4 bg-alabaster p-4 mt-4'>
+          <label className='text-marine_blue'>Monthly</label>
           <InputSwitch
             checked={billing === 'yearly'}
             onChange={(e) => handleBillingChange(e.value)}
           />
-          <label className="text-marine_blue">Yearly</label>
+          <label className='text-marine_blue'>Yearly</label>
         </div>
 
         {errors.billing && (
-          <p className="text-strawberry_red">Please select a billing frequency</p>
+          <p className='text-strawberry_red'>
+            Please select a billing frequency
+          </p>
         )}
-
-
       </div>
 
-
       {/* Navigation buttons */}
-      <div className="flex justify-between mt-6">
+      <div className='flex justify-between mt-6'>
         <Button
-          type="button"
+          type='button'
           onClick={prevStep}
-          label="Go Back"
-          className=" text-gray-700 px-4 py-2 rounded-md hover:text-marine_blue hover:font-bold transition"
+          label='Go Back'
+          className=' text-gray-700 px-4 py-2 rounded-md hover:text-marine_blue hover:font-bold transition'
         />
         <Button
-          type="submit"
-          label="Next Step"
-          className="bg-marine_blue text-white px-6 py-3 rounded-md hover:bg-purplish_blue transition"
+          type='submit'
+          label='Next Step'
+          className='bg-marine_blue text-white px-6 py-3 rounded-md hover:bg-purplish_blue transition'
         />
       </div>
     </form>
-  );
+  )
 }
