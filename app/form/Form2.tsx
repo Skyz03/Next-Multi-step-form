@@ -98,7 +98,7 @@ export default function Step2({ nextStep, prevStep, formData, setFormData }: Ste
           {plans.map((planOption) => (
             <Card
               key={planOption.name}
-              className={`cursor-pointer min-w-40 p-4 rounded-md ${plan === planOption.name ? 'border-2 border-marine_blue' : 'border border-gray-300'
+              className={`cursor-pointer min-w-40 p-4 rounded-md hover:border-marine_blue ${plan === planOption.name ? 'border-2 border-marine_blue' : 'border border-gray-300'
                 }`}
               onClick={() => handlePlanChange(planOption.name as PlanType)}
             >
