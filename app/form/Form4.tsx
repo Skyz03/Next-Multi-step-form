@@ -19,6 +19,7 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
 
   // Calculate the total price including add-ons
   const calculateTotal = () => {
+    console.log(formData)
     const planPrice = formData.planPrice || 0
     const addonsTotal = formData.addOns.reduce(
       (acc, { price }) => acc + price,

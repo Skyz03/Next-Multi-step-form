@@ -72,13 +72,9 @@ export default function Step2({
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      plan: formData.plan || 'Arcade',
-      billing: formData.billing || 'monthly',
-    },
-  })
+  } = useForm()
 
+  // Manage plan and billing state manually
   const [billing, setBilling] = useState<'monthly' | 'yearly'>(
     formData.billing || 'monthly',
   )
@@ -96,25 +92,23 @@ export default function Step2({
     setPrice(getPrice(newPlan, billing))
   }
 
-  // Handle changes in billing frequency with InputSwitch
+  // Update billing and price
   const handleBillingChange = (checked: boolean) => {
     const newBilling = checked ? 'yearly' : 'monthly'
     setBilling(newBilling)
-    setValue('billing', newBilling) // Update react-hook-form state
     setPrice(getPrice(plan, newBilling))
   }
 
   // Handle form submission
-  const onSubmit = (data: {
-    plan: PlanType
-    billing: 'monthly' | 'yearly'
-  }) => {
+  const onSubmit = () => {
+    // Update formData correctly
     setFormData({
       ...formData,
-      plan: data.plan,
-      billing: data.billing,
-      planPrice: price,
+      plan: plan, // Set the selected plan
+      billing: billing, // Set the billing frequency
+      planPrice: price, // Set the calculated price
     })
+    console.log('Data on submit:', { plan, billing, price })
     nextStep()
   }
 
@@ -123,14 +117,14 @@ export default function Step2({
       onSubmit={handleSubmit(onSubmit)}
       className='flex flex-col gap-20 h-full bg-white rounded-lg'
     >
-      {/* Header for the plan selection */}
-      <div className='flex flex-col gap-2'>
+      {/* Plan selection options */}
+
+      <div className='flex flex-col gap-4'>
         <FormHeading
-          text='Select Your Plan'
-          infoText='You have the option of monthly or yearly billing'
+          text='Personal Info'
+          infoText='Please provide your name, email address, and phone number.'
         />
-        {/* Plan selection options */}
-        <div className='flex gap-4'>
+        <div className='flex flex-row gap-4'>
           {plans.map((planOption) => (
             <Card
               key={planOption.name}
@@ -159,8 +153,7 @@ export default function Step2({
             </Card>
           ))}
         </div>
-
-        {/* Billing frequency options using InputSwitch */}
+        {/* Billing frequency options */}
         <div className='flex items-center justify-center gap-4 bg-alabaster p-4 mt-4'>
           <label className='text-marine_blue'>Monthly</label>
           <InputSwitch
@@ -169,12 +162,6 @@ export default function Step2({
           />
           <label className='text-marine_blue'>Yearly</label>
         </div>
-
-        {errors.billing && (
-          <p className='text-strawberry_red'>
-            Please select a billing frequency
-          </p>
-        )}
       </div>
 
       {/* Navigation buttons */}
@@ -183,12 +170,12 @@ export default function Step2({
           type='button'
           onClick={prevStep}
           label='Go Back'
-          className=' text-gray-700 px-4 py-2 rounded-md hover:text-marine_blue hover:font-bold transition'
+          className='text-gray-700 px-4 py-2 rounded-md'
         />
         <Button
           type='submit'
           label='Next Step'
-          className='bg-marine_blue text-white px-6 py-3 rounded-md hover:bg-purplish_blue transition'
+          className='bg-marine_blue text-white px-6 py-3 rounded-md'
         />
       </div>
     </form>
