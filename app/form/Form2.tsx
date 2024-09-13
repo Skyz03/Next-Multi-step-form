@@ -150,6 +150,12 @@ export default function Step2({
                   : planOption.priceYearly}
                 /mo
               </p>
+              {/* Conditionally render "2 months free" text for yearly billing */}
+              {billing === 'yearly' && (
+                <p className='text-marine_blue font-semibold text-sm'>
+                  2 months free
+                </p>
+              )}
             </Card>
           ))}
         </div>

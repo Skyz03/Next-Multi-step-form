@@ -5,8 +5,14 @@ import { FormHeading } from '@components/atoms'
 
 type StepProps = {
   prevStep: () => void // Function to go back to the previous step
-  formData: { addOns?: { name: string; price: number }[] } // Form data to track selected add-ons
-  setFormData: (data: { addOns?: { name: string; price: number }[] }) => void // Function to update form data
+  formData: {
+    addOns?: { name: string; price: number }[]
+    billing?: 'monthly' | 'yearly' // Add billing information from Step 2
+  } // Form data to track selected add-ons
+  setFormData: (data: {
+    addOns?: { name: string; price: number }[]
+    billing?: 'monthly' | 'yearly' // Include billing here as well
+  }) => void // Function to update form data
   nextStep: () => void // Function to go to the next step
 }
 
@@ -16,7 +22,7 @@ export default function Step3({
   setFormData,
   nextStep,
 }: StepProps) {
-  // Define the available add-ons and their prices
+  // Define the base monthly add-on prices
   const addOnOptions: { [key: string]: number } = {
     'Online service': 1,
     'Larger storage': 2,
@@ -28,7 +34,10 @@ export default function Step3({
     formData.addOns ? formData.addOns.map((addOn) => addOn.name) : [],
   )
 
-  // Toggle the selection of an add-on
+  // Get the billing type (default to monthly if not set)
+  const billing = formData.billing || 'monthly'
+
+  // Function to toggle the selection of an add-on
   const handleAddOnChange = (addOn: string) => {
     setSelectedAddOns(
       (prev) =>
@@ -40,10 +49,13 @@ export default function Step3({
 
   // Update form data with selected add-ons and proceed to the next step
   const handleNext = () => {
-    // Map selected add-ons to include their prices
+    // Map selected add-ons to include their adjusted prices based on billing frequency
     const selectedAddOnsWithPrices = selectedAddOns.map((name) => ({
       name,
-      price: addOnOptions[name as keyof typeof addOnOptions], // Type assertion
+      price:
+        billing === 'monthly'
+          ? addOnOptions[name as keyof typeof addOnOptions] // Monthly price
+          : addOnOptions[name as keyof typeof addOnOptions] * 10, // Yearly price (10 months, 2 months free)
     }))
     setFormData({ ...formData, addOns: selectedAddOnsWithPrices }) // Save selected add-ons to form data
     nextStep() // Move to the next step
@@ -80,7 +92,14 @@ export default function Step3({
                   Online service
                 </h4>
                 <p className='text-cool_gray'>Access to multiplayer games</p>
-                <p className='text-marine_blue font-semibold'>+ $1/mo</p>
+                <p className='text-marine_blue font-semibold'>
+                  + $
+                  {billing === 'monthly'
+                    ? addOnOptions['Online service'] // Monthly price
+                    : addOnOptions['Online service'] * 10}
+                  {billing === 'yearly' && '/yr'}
+                  {billing === 'monthly' && '/mo'}
+                </p>
               </div>
             </label>
           </div>
@@ -106,7 +125,14 @@ export default function Step3({
                   Larger storage
                 </h4>
                 <p className='text-cool_gray'>Extra 1TB of cloud save</p>
-                <p className='text-marine_blue font-semibold'>+ $2/mo</p>
+                <p className='text-marine_blue font-semibold'>
+                  + $
+                  {billing === 'monthly'
+                    ? addOnOptions['Larger storage']
+                    : addOnOptions['Larger storage'] * 10}
+                  {billing === 'yearly' && '/yr'}
+                  {billing === 'monthly' && '/mo'}
+                </p>
               </div>
             </label>
           </div>
@@ -132,7 +158,14 @@ export default function Step3({
                   Customizable profile
                 </h4>
                 <p className='text-cool_gray'>Custom theme on your profile</p>
-                <p className='text-marine_blue font-semibold'>+ $2/mo</p>
+                <p className='text-marine_blue font-semibold'>
+                  + $
+                  {billing === 'monthly'
+                    ? addOnOptions['Customizable profile']
+                    : addOnOptions['Customizable profile'] * 10}
+                  {billing === 'yearly' && '/yr'}
+                  {billing === 'monthly' && '/mo'}
+                </p>
               </div>
             </label>
           </div>
