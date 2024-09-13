@@ -101,7 +101,7 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
         <span className='text-cool_gray'>
           Total (per {formData.billing === 'monthly' ? 'month' : 'year'})
         </span>
-        <span className='text-purplish_blue'>${calculateTotal()}/mo</span>
+        <span className='text-purplish_blue'>${calculateTotal()}{formData.billing === 'monthly' ? '/mo' : '/yr'}</span>
       </div>
 
       {/* Navigation Buttons */}
