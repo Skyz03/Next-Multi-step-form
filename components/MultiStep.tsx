@@ -8,7 +8,12 @@ import Step4 from '../app/form/Form4'
 
 const MultiStepForm: React.FC = () => {
   const [step, setStep] = useState(1) // Track the current step of the form
-  const [formData, setFormData] = useState({}) // Store form data across steps
+  const [formData, setFormData] = useState({
+    plan: undefined,
+    billing: 'monthly',
+    planPrice: 0,
+    addOns: [],
+  }) // Store form data across steps
 
   // Function to move to the next step
   const nextStep = () => setStep(step + 1)
