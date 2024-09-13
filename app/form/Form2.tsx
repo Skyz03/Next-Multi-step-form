@@ -148,8 +148,11 @@ export default function Step2({
                 {billing === 'monthly'
                   ? planOption.priceMonthly
                   : planOption.priceYearly}
-                /mo
+                <span className='text-cool_gray text-sm'>
+                  {billing === 'monthly' ? '/mo' : '/yr'}
+                </span>
               </p>
+
               {/* Conditionally render "2 months free" text for yearly billing */}
               {billing === 'yearly' && (
                 <p className='text-marine_blue font-semibold text-sm'>

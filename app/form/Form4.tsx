@@ -72,7 +72,7 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
           </h3>
 
           <p className='text-marine_blue font-bold text-xl'>
-            ${formData.planPrice}/mo
+            ${formData.planPrice}{formData.billing === 'monthly' ? '/mo' : '/yr'}
           </p>
         </div>
         <button
@@ -87,7 +87,10 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
           {formData.addOns.map(({ name, price }) => (
             <div key={name} className='flex p-2 justify-between'>
               <span className='text-cool_gray'>{name}</span>
-              <span className='text-marine_blue font-medium'>+${price}/mo</span>
+              <span className='text-marine_blue font-medium'>
+                +${price}
+                {formData.billing === 'monthly' ? '/mo' : '/yr'}
+              </span>
             </div>
           ))}
         </div>
