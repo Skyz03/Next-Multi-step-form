@@ -5,6 +5,7 @@ import Step1 from '../app/form/Form1'
 import Step2 from '../app/form/Form2'
 import Step3 from '../app/form/Form3'
 import Step4 from '../app/form/Form4'
+import { useMultiFormContext } from '@context/MultiFormContext'
 
 interface MultiStepFormProps {
   currentStep: number
@@ -15,12 +16,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({
   currentStep,
   setCurrentStep,
 }) => {
-  const [formData, setFormData] = React.useState({
-    plan: undefined,
-    billing: 'monthly',
-    planPrice: 0,
-    addOns: [],
-  }) // Store form data across steps
+  
+  const {formData,setFormData} = useMultiFormContext()// Store form data across steps
 
   // Function to move to the next step
   const nextStep = () => setCurrentStep(currentStep + 1)

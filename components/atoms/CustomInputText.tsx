@@ -55,9 +55,9 @@ const CustomInputText = ({
               <ErrorText name={name} errors={errors} />
             </div>
             <InputText
+              {...restProps}
               id={name}
-              value={value || ''}
-              name={name}
+              value={value ?? ''}
               ref={ref}
               onBlur={(e) => {
                 onBlur()
@@ -65,10 +65,9 @@ const CustomInputText = ({
               }}
               placeholder={placeholder}
               onChange={(e) => onChange(e.target.value)}
-              {...restProps}
               className={cx(
                 { 'p-invalid': error },
-                'placeholder: p-3 text-lg font-medium text-marine_blue sm:w-full',
+                'placeholder: p-3 text-lg font-medium cursor-pointer text-marine_blue sm:w-full',
               )}
             />
           </section>

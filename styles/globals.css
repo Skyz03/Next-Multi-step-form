@@ -8,6 +8,6 @@
   }
 
   .custom-input-active {
-    @apply outline-marine_blue;
+    @apply focus:ring-0 outline-marine_blue;
   }
 }

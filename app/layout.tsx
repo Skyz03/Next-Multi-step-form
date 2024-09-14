@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import { Ubuntu } from 'next/font/google'
+import { Provider } from '@components/templates'
+import 'primereact/resources/themes/lara-light-blue/theme.css'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
 import '@styles/globals.css'
 
 const ubuntu = Ubuntu({
@@ -23,7 +27,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${ubuntu.className} bg-magnolia antialiased`}>
         <main className='min-w-screen container flex min-h-screen items-center justify-center'>
-          {children}
+          <Provider>{children}</Provider>
         </main>
       </body>
     </html>

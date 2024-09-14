@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { Button } from 'primereact/button'
-import { FormHeading } from '@components/atoms'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { CustomedButton, FormHeading } from '@components/atoms'
 import { CustomInputText } from '@components/atoms'
 import { EMAILREGEX, PHONEREGEX } from '@utils/constants'
+
 type StepProps = {
   nextStep: () => void
   formData: any
@@ -19,18 +18,18 @@ type FormData = {
 }
 
 export default function Step1({ nextStep, formData, setFormData }: StepProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>()
+  const handleForm = useForm<FormData>({
+    defaultValues: { name: '', email: '', phone: '' },
+  })
 
-  const onSubmit = (data: FormData) => {
+  const { handleSubmit } = handleForm
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     setFormData({ ...formData, ...data })
+    console.log(data)
+
     nextStep()
   }
-
-  const handleForm = useForm()
 
   return (
     <form
@@ -70,11 +69,7 @@ export default function Step1({ nextStep, formData, setFormData }: StepProps) {
           />
         </section>
       </div>
-      <Button
-        type='submit'
-        label='Next Step'
-        className='self-end rounded-md bg-marine_blue px-6 py-3 font-medium text-white transition hover:bg-purplish_blue'
-      />
+      <CustomedButton/>
     </form>
   )
 }
