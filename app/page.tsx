@@ -1,19 +1,22 @@
-import MultiStepForm from '@/components/MultiStep'
+"use client"
+import { useState } from 'react';
+import MultiStepForm from '@/components/MultiStep';
 
 // Define the type for the step object
 interface StepProps {
-  number: number
-  title: string
-  subtitle: string
-  isActive: boolean
+  number: number;
+  title: string;
+  subtitle: string;
+  isActive: boolean;
 }
 
-const steps: StepProps[] = [
-  { number: 1, title: 'Your Info', subtitle: 'Step 1', isActive: true },
-  { number: 2, title: 'Select Plan', subtitle: 'Step 2', isActive: false },
-  { number: 3, title: 'Add-ons', subtitle: 'Step 3', isActive: false },
-  { number: 4, title: 'Summary', subtitle: 'Step 4', isActive: false },
-]
+// Initial steps array (without isActive, which will be updated dynamically)
+const initialSteps: Omit<StepProps, 'isActive'>[] = [
+  { number: 1, title: 'Your Info', subtitle: 'Step 1' },
+  { number: 2, title: 'Select Plan', subtitle: 'Step 2' },
+  { number: 3, title: 'Add-ons', subtitle: 'Step 3' },
+  { number: 4, title: 'Summary', subtitle: 'Step 4' },
+];
 
 // Step component to represent each individual step
 function Step({ number, title, subtitle, isActive }: StepProps) {
@@ -30,10 +33,19 @@ function Step({ number, title, subtitle, isActive }: StepProps) {
         <h2 className='font-bold uppercase text-white'>{title}</h2>
       </div>
     </div>
-  )
+  );
 }
 
 export default function FormPage() {
+  // State to track the current active step
+  const [currentStep, setCurrentStep] = useState(1);
+
+  // Dynamically update the steps array with isActive based on currentStep
+  const steps = initialSteps.map((step) => ({
+    ...step,
+    isActive: step.number === currentStep, // Set active based on the current step
+  }));
+
   return (
     <section className='flex flex-col md:flex-row p-5 gap-8 bg-white shadow-md rounded-2xl'>
       {/* Sidebar with background image and steps */}
@@ -54,8 +66,9 @@ export default function FormPage() {
 
       {/* Form Section */}
       <div className='flex-grow'>
-        <MultiStepForm />
+        {/* Pass setCurrentStep to MultiStepForm to allow form navigation */}
+        <MultiStepForm currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </div>
     </section>
-  )
+  );
 }
