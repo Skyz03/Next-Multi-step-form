@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${ubuntu.className} bg-magnolia antialiased`}>
-        <main className='container flex min-h-screen items-center justify-center'>
+        <main className='min-w-screen container flex min-h-screen items-center justify-center'>
           {children}
         </main>
       </body>
