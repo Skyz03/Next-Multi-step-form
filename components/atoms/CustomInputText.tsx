@@ -47,7 +47,7 @@ const CustomInputText = ({
         fieldState: { error },
       }) => {
         return (
-          <section className='flex flex-col gap-1 justify-end w-full [&_.p-inputtext]:custom-input [&_.p-inputtext:enabled:focus-visible]:custom-input-active'>
+          <section className='[&_.p-inputtext]:custom-input [&_.p-inputtext:enabled:focus-visible]:custom-input-active flex w-full flex-col justify-end gap-1'>
             <div className='flex items-center justify-between'>
               <label htmlFor={name} className='font-medium text-marine_blue'>
                 {label}
@@ -68,7 +68,7 @@ const CustomInputText = ({
               {...restProps}
               className={cx(
                 { 'p-invalid': error },
-                'p-3 sm:w-full font-medium placeholder: text-lg text-marine_blue',
+                'placeholder: p-3 text-lg font-medium text-marine_blue sm:w-full',
               )}
             />
           </section>

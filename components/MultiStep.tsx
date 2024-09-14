@@ -1,14 +1,21 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import Step1 from '../app/form/Form1'
 import Step2 from '../app/form/Form2'
 import Step3 from '../app/form/Form3'
 import Step4 from '../app/form/Form4'
 
-const MultiStepForm: React.FC = () => {
-  const [step, setStep] = useState(1) // Track the current step of the form
-  const [formData, setFormData] = useState({
+interface MultiStepFormProps {
+  currentStep: number
+  setCurrentStep: (step: number) => void
+}
+
+const MultiStepForm: React.FC<MultiStepFormProps> = ({
+  currentStep,
+  setCurrentStep,
+}) => {
+  const [formData, setFormData] = React.useState({
     plan: undefined,
     billing: 'monthly',
     planPrice: 0,
@@ -16,10 +23,10 @@ const MultiStepForm: React.FC = () => {
   }) // Store form data across steps
 
   // Function to move to the next step
-  const nextStep = () => setStep(step + 1)
+  const nextStep = () => setCurrentStep(currentStep + 1)
 
   // Function to move to the previous step
-  const prevStep = () => setStep(step - 1)
+  const prevStep = () => setCurrentStep(currentStep - 1)
 
   // Function to handle final form submission
   const handleSubmit = () => {
@@ -27,9 +34,9 @@ const MultiStepForm: React.FC = () => {
     console.log(formData) // Log form data or handle API submission
   }
 
-  // Determine which step to display based on the current step
+  // Determine which step to display based on the currentStep
   let stepContent
-  switch (step) {
+  switch (currentStep) {
     case 1:
       stepContent = (
         <Step1
@@ -72,14 +79,7 @@ const MultiStepForm: React.FC = () => {
       stepContent = null // Render nothing if step is invalid
   }
 
-  return (
-    <>
-      {/* Container for the form */}
-      <div>
-        {stepContent} {/* Render the current step's content */}
-      </div>
-    </>
-  )
+  return <div>{stepContent}</div>
 }
 
 export default MultiStepForm

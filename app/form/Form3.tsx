@@ -62,7 +62,7 @@ export default function Step3({
   }
 
   return (
-    <form className='flex flex-col gap-20 h-full bg-white rounded-lg'>
+    <form className='flex h-full flex-col gap-10 rounded-lg bg-white'>
       {/* Header for add-ons selection */}
       <div className='flex flex-col gap-2'>
         <FormHeading
@@ -70,10 +70,10 @@ export default function Step3({
           infoText='Add-ons help enhance your gaming experience'
         />
         {/* Add-ons selection options */}
-        <div className='flex flex-col gap-4 mb-6'>
+        <div className='flex flex-col gap-4'>
           {/* Add-on for Online service */}
           <div
-            className={`border p-4 rounded-lg cursor-pointer min-w-40 hover:border-marine_blue ${
+            className={`min-w-40 cursor-pointer rounded-lg border p-4 hover:border-marine_blue ${
               selectedAddOns.includes('Online service')
                 ? 'border-2 border-marine_blue'
                 : 'border border-gray-300'
@@ -92,7 +92,7 @@ export default function Step3({
                   Online service
                 </h4>
                 <p className='text-cool_gray'>Access to multiplayer games</p>
-                <p className='text-marine_blue font-semibold'>
+                <p className='font-semibold text-marine_blue'>
                   + $
                   {billing === 'monthly'
                     ? addOnOptions['Online service'] // Monthly price
@@ -106,7 +106,7 @@ export default function Step3({
 
           {/* Add-on for Larger storage */}
           <div
-            className={`border rounded-lg cursor-pointer min-w-40 p-4 hover:border-marine_blue ${
+            className={`min-w-40 cursor-pointer rounded-lg border p-4 hover:border-marine_blue ${
               selectedAddOns.includes('Larger storage')
                 ? 'border-2 border-marine_blue'
                 : 'border border-gray-300'
@@ -125,7 +125,7 @@ export default function Step3({
                   Larger storage
                 </h4>
                 <p className='text-cool_gray'>Extra 1TB of cloud save</p>
-                <p className='text-marine_blue font-semibold'>
+                <p className='font-semibold text-marine_blue'>
                   + $
                   {billing === 'monthly'
                     ? addOnOptions['Larger storage']
@@ -139,7 +139,7 @@ export default function Step3({
 
           {/* Add-on for Customizable profile */}
           <div
-            className={`border p-4 rounded-lg cursor-pointer min-w-40 hover:border-marine_blue ${
+            className={`min-w-40 cursor-pointer rounded-lg border p-4 hover:border-marine_blue ${
               selectedAddOns.includes('Customizable profile')
                 ? 'border-2 border-marine_blue'
                 : 'border border-gray-300'
@@ -158,7 +158,7 @@ export default function Step3({
                   Customizable profile
                 </h4>
                 <p className='text-cool_gray'>Custom theme on your profile</p>
-                <p className='text-marine_blue font-semibold'>
+                <p className='font-semibold text-marine_blue'>
                   + $
                   {billing === 'monthly'
                     ? addOnOptions['Customizable profile']
@@ -173,18 +173,18 @@ export default function Step3({
       </div>
 
       {/* Navigation buttons */}
-      <div className='flex justify-between mt-6'>
+      <div className='flex justify-between'>
         <button
           type='button'
           onClick={prevStep}
-          className='text-gray-700 px-4 py-2 rounded-md hover:text-marine_blue hover:font-bold transition'
+          className='rounded-md px-4 py-2 text-gray-700 transition hover:font-bold hover:text-marine_blue'
         >
           Back
         </button>
         <button
           type='button'
           onClick={handleNext}
-          className='bg-marine_blue text-white px-6 py-3 rounded-md hover:bg-purplish_blue transition'
+          className='rounded-md bg-marine_blue px-6 py-3 text-white transition hover:bg-purplish_blue'
         >
           Next
         </button>
