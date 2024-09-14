@@ -65,7 +65,7 @@ export default function FormPage() {
 
       {/* Form Section */}
       <div className='flex-grow'>
-        <div className='relative flex h-full items-center justify-center rounded-xl bg-white p-6 shadow-lg lg:max-h-[650px] lg:min-h-[650px] lg:min-w-[600px] lg:max-w-[600px]'>
+        <div className='relative flex h-full items-center justify-center rounded-xl bg-white p-6 lg:max-h-[650px] lg:min-h-[650px] lg:min-w-[600px] lg:max-w-[600px]'>
           {/* Pass setCurrentStep t  o ltiStepForm to allow
             fg */}
           <MultiStepForm
