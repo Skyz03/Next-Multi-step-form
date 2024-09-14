@@ -8,8 +8,8 @@ type FormHeadingProps = {
 const FormHeading: FC<FormHeadingProps> = ({ text, infoText }) => {
   return (
     <section>
-      <h1 className='text-4xl font-bold mb-4 text-marine_blue'>{text}</h1>
-      <h2 className='text-lg mb-6 text-cool_gray'>{infoText}</h2>
+      <h1 className='mb-4 text-4xl font-bold text-marine_blue'>{text}</h1>
+      <h2 className='mb-6 text-lg text-cool_gray'>{infoText}</h2>
     </section>
   )
 }

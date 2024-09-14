@@ -115,7 +115,7 @@ export default function Step2({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-20 h-full bg-white rounded-lg'
+      className='flex h-full flex-col gap-10 rounded-lg bg-white'
     >
       {/* Plan selection options */}
 
@@ -128,7 +128,7 @@ export default function Step2({
           {plans.map((planOption) => (
             <Card
               key={planOption.name}
-              className={`cursor-pointer min-w-40 p-4 rounded-md hover:border-marine_blue ${
+              className={`min-w-40 cursor-pointer rounded-md p-4 hover:border-marine_blue ${
                 plan === planOption.name
                   ? 'border-2 border-marine_blue'
                   : 'border border-gray-300'
@@ -138,7 +138,7 @@ export default function Step2({
               <img
                 src={planOption.imgSrc}
                 alt={planOption.altText}
-                className='w-10 h-10 mb-2'
+                className='mb-2 h-10 w-10'
               />
               <h4 className='text-xl font-semibold text-marine_blue'>
                 {planOption.name}
@@ -148,14 +148,14 @@ export default function Step2({
                 {billing === 'monthly'
                   ? planOption.priceMonthly
                   : planOption.priceYearly}
-                <span className='text-cool_gray text-sm'>
+                <span className='text-sm text-cool_gray'>
                   {billing === 'monthly' ? '/mo' : '/yr'}
                 </span>
               </p>
 
               {/* Conditionally render "2 months free" text for yearly billing */}
               {billing === 'yearly' && (
-                <p className='text-marine_blue font-semibold text-sm'>
+                <p className='text-sm font-semibold text-marine_blue'>
                   2 months free
                 </p>
               )}
@@ -163,7 +163,7 @@ export default function Step2({
           ))}
         </div>
         {/* Billing frequency options */}
-        <div className='flex items-center justify-center gap-4 bg-alabaster p-4 mt-4'>
+        <div className='mt-4 flex items-center justify-center gap-4 bg-alabaster p-4'>
           <label className='text-marine_blue'>Monthly</label>
           <InputSwitch
             checked={billing === 'yearly'}
@@ -174,17 +174,17 @@ export default function Step2({
       </div>
 
       {/* Navigation buttons */}
-      <div className='flex justify-between mt-6'>
+      <div className='mt-6 flex justify-between'>
         <Button
           type='button'
           onClick={prevStep}
           label='Go Back'
-          className='text-gray-700 px-4 py-2 rounded-md'
+          className='rounded-md px-4 py-2 text-gray-700'
         />
         <Button
           type='submit'
           label='Next Step'
-          className='bg-marine_blue text-white px-6 py-3 rounded-md'
+          className='rounded-md bg-marine_blue px-6 py-3 text-white'
         />
       </div>
     </form>

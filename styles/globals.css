@@ -4,7 +4,7 @@
 
 @layer base {
   .custom-input {
-    @apply w-full border border-cool_gray rounded-md hover:border-marine_blue;
+    @apply w-full rounded-md border border-cool_gray hover:border-marine_blue;
   }
 
   .custom-input-active {

@@ -34,7 +34,7 @@ export default function Step1({ nextStep, formData, setFormData }: StepProps) {
 
   return (
     <form
-      className='flex flex-col gap-20 h-full'
+      className='flex h-full flex-col gap-10'
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className='flex flex-col gap-2'>
@@ -73,7 +73,7 @@ export default function Step1({ nextStep, formData, setFormData }: StepProps) {
       <Button
         type='submit'
         label='Next Step'
-        className='bg-marine_blue self-end text-white font-medium py-3 px-6 rounded-md hover:bg-purplish_blue transition'
+        className='self-end rounded-md bg-marine_blue px-6 py-3 font-medium text-white transition hover:bg-purplish_blue'
       />
     </form>
   )

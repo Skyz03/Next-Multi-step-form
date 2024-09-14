@@ -1,13 +1,13 @@
-"use client"
-import { useState } from 'react';
-import MultiStepForm from '@/components/MultiStep';
+'use client'
+import { useState } from 'react'
+import MultiStepForm from '@/components/MultiStep'
 
 // Define the type for the step object
 interface StepProps {
-  number: number;
-  title: string;
-  subtitle: string;
-  isActive: boolean;
+  number: number
+  title: string
+  subtitle: string
+  isActive: boolean
 }
 
 // Initial steps array (without isActive, which will be updated dynamically)
@@ -16,15 +16,14 @@ const initialSteps: Omit<StepProps, 'isActive'>[] = [
   { number: 2, title: 'Select Plan', subtitle: 'Step 2' },
   { number: 3, title: 'Add-ons', subtitle: 'Step 3' },
   { number: 4, title: 'Summary', subtitle: 'Step 4' },
-];
+]
 
 // Step component to represent each individual step
 function Step({ number, title, subtitle, isActive }: StepProps) {
   return (
     <div className='flex items-center gap-4'>
       <div
-        className={`flex justify-center items-center h-10 w-10 rounded-full 
-          ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
+        className={`flex h-10 w-10 items-center justify-center rounded-full ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
       >
         {number}
       </div>
@@ -33,23 +32,23 @@ function Step({ number, title, subtitle, isActive }: StepProps) {
         <h2 className='font-bold uppercase text-white'>{title}</h2>
       </div>
     </div>
-  );
+  )
 }
 
 export default function FormPage() {
   // State to track the current active step
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1)
 
   // Dynamically update the steps array with isActive based on currentStep
   const steps = initialSteps.map((step) => ({
     ...step,
     isActive: step.number === currentStep, // Set active based on the current step
-  }));
+  }))
 
   return (
-    <section className='flex flex-col md:flex-row p-5 gap-8 bg-white shadow-md rounded-2xl'>
+    <section className='flex flex-col gap-8 rounded-2xl bg-white p-5 shadow-md md:flex-row'>
       {/* Sidebar with background image and steps */}
-      <div className="bg-[url('/assets/images/bg-sidebar-desktop.svg')] bg-no-repeat bg-cover bg-center rounded-2xl p-8 w-full md:w-1/3">
+      <div className="w-full rounded-2xl bg-[url('/assets/images/bg-sidebar-desktop.svg')] bg-cover bg-center bg-no-repeat p-8 md:w-1/3">
         {/* Dynamically render steps */}
         <div className='flex flex-col gap-8'>
           {steps.map((step) => (
@@ -66,9 +65,14 @@ export default function FormPage() {
 
       {/* Form Section */}
       <div className='flex-grow'>
-        {/* Pass setCurrentStep to MultiStepForm to allow form navigation */}
-        <MultiStepForm currentStep={currentStep} setCurrentStep={setCurrentStep} />
+        <div className='relative flex h-full max-h-[600px] min-h-[600px] min-w-[650px] max-w-[600px] items-center justify-center rounded-xl bg-white p-6 shadow-lg'>
+          {/* Pass setCurrentStep to MultiStepForm to allow form navigation */}
+          <MultiStepForm
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        </div>
       </div>
     </section>
-  );
+  )
 }
