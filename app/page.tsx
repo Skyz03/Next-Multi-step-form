@@ -23,12 +23,14 @@ function Step({ number, title, subtitle, isActive }: StepProps) {
   return (
     <div className='flex items-center gap-4'>
       <div
-        className={`flex h-10 w-10 items-center justify-center rounded-full ${isActive ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
+        className={`flex h-10 w-10 items-center justify-center rounded-full ${isActive ? 'bg-blue-500 text-white' : 'border text-white'}`}
       >
         {number}
       </div>
-      <div>
-        <p className='text-sm font-semibold text-cool_gray'>{subtitle}</p>
+      <div className='hidden md:block'>
+        <p className='text-sm font-semibold uppercase text-cool_gray'>
+          {subtitle}
+        </p>
         <h2 className='font-bold uppercase text-white'>{title}</h2>
       </div>
     </div>
@@ -50,7 +52,7 @@ export default function FormPage() {
       {/* Sidebar with background image and steps */}
       <div className="w-full rounded-2xl bg-[url('/assets/images/bg-sidebar-desktop.svg')] bg-cover bg-center bg-no-repeat p-8 md:w-1/3">
         {/* Dynamically render steps */}
-        <div className='flex flex-col gap-8'>
+        <div className='flex flex-row justify-center gap-8 md:flex-col md:justify-start'>
           {steps.map((step) => (
             <Step
               key={step.number}
