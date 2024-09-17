@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { FormHeading } from '@components/atoms'
+import Image from 'next/image'
 
 type Step4Props = {
   prevStep: () => void
@@ -37,19 +38,18 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
   if (submitted) {
     return (
       <div className='flex h-full flex-col items-center justify-center gap-6 rounded-lg bg-white'>
+        <Image
+          src='./assets/images/icon-thank-you.svg'
+          alt='checkmark'
+          width='100'
+          height='100'
+          className='mb-2 h-24 w-24'
+        />
         <h1 className='text-2xl font-bold'>Thank You!</h1>
-        <p className='text-lg text-cool_gray'>
-          Your submission has been successfully completed.
-        </p>
-        <div className='w-full rounded-lg bg-magnolia p-4'>
-          <h3 className='text-lg font-semibold'>Summary of your submission:</h3>
-          <pre className='mt-2 rounded-lg bg-gray-100 p-4'>
-            {JSON.stringify(formData, null, 2)}
-          </pre>
-        </div>
         <p className='text-center text-cool_gray'>
-          We will get back to you shortly. If you have any questions, feel free
-          to contact our support team.
+          Thanks for confirming your subscription! We hope you have fun using
+          our platform. If you ever need support, please feel free to email us
+          at support@loremgaming.com
         </p>
       </div>
     )
