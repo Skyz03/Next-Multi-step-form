@@ -2,12 +2,9 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { InputSwitch } from 'primereact/inputswitch'
-import { Button } from 'primereact/button'
-import { FormHeading } from '@components/atoms'
+import { BillingFrequency, CustomedButton, FormHeading} from '@components/atoms'
 import { StepProps } from '@interfaces/commons'
 import { useMultiFormContext } from '@context/MultiFormContext'
-import { getPrice } from '@utils/helpers'
 import { CustomedCardList } from '@components/molecules'
 
 export default function Step2({
@@ -17,22 +14,14 @@ export default function Step2({
   setFormData,
 }: StepProps) {
   const {
-    register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm()
 
   
-  const {billing, setBilling, plan,  price, setPrice} = useMultiFormContext()
+  const {billing, plan,  price} = useMultiFormContext()
 
-  // Update billing and price
-  const handleBillingChange = (checked: boolean) => {
-    const newBilling = checked ? 'yearly' : 'monthly'
-    setBilling(newBilling)
-    setPrice(getPrice(plan, newBilling))
-  }
-
+  
   // Handle form submission
   const onSubmit = () => {
     // Update formData correctly
@@ -42,7 +31,6 @@ export default function Step2({
       billing: billing, // Set the billing frequency
       planPrice: price, // Set the calculated price
     })
-    console.log('Data on submit:', { plan, billing, price })
     nextStep()
   }
 
@@ -56,30 +44,20 @@ export default function Step2({
           text='Personal Info'
           infoText='Please provide your name, email address, and phone number.'
         />
-       <CustomedCardList/>
-        {/* Billing frequency options */}
-        <div className='mt-4 flex items-center justify-center gap-4 bg-alabaster p-4'>
-          <label className='text-marine_blue'>Monthly</label>
-          <InputSwitch
-            checked={billing === 'yearly'}
-            onChange={(e) => handleBillingChange(e.value)}
-          />
-          <label className='text-marine_blue'>Yearly</label>
-        </div>
+        <CustomedCardList/>
+        <BillingFrequency />
       </div>
 
-      {/* Navigation buttons */}
       <div className='mt-6 flex justify-between'>
-        <Button
-          type='button'
-          onClick={prevStep}
+        <CustomedButton
+          typeButton='button'
+          fn={prevStep}
           label='Go Back'
-          className='rounded-md px-4 py-2 text-gray-700'
+          style='bg-transparent hover:bg-transparent hover:text-gray-500 border-none text-gray-500'
         />
-        <Button
-          type='submit'
+        <CustomedButton
+          typeButton='submit'
           label='Next Step'
-          className='rounded-md bg-marine_blue px-6 py-3 text-white'
         />
       </div>
     </form>

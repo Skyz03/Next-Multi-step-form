@@ -68,8 +68,8 @@ export default function Step1({ nextStep, formData, setFormData }: StepProps) {
             pattern={PHONEREGEX}
           />
         </section>
-      </div>
-      <CustomedButton/>
+      </div> 
+      <CustomedButton label='Next Step'/>
     </form>
   )
 }

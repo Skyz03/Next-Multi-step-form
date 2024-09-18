@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { FormHeading } from '@components/atoms'
+import { CustomedButton, FormHeading } from '@components/atoms'
 
 type Step4Props = {
   prevStep: () => void
@@ -110,20 +110,17 @@ const Step4: React.FC<Step4Props> = ({ prevStep, formData, handleSubmit }) => {
 
       {/* Navigation Buttons */}
       <div className='flex justify-between'>
-        <button
-          type='button'
-          onClick={prevStep}
-          className='rounded-md px-4 py-2 text-gray-700 transition hover:font-bold hover:text-marine_blue'
-        >
-          Back
-        </button>
-        <button
-          type='button'
-          onClick={onSubmit}
-          className='rounded-md bg-marine_blue px-6 py-3 text-white transition hover:bg-purplish_blue'
-        >
-          Confirm
-        </button>
+      <CustomedButton
+          typeButton='button'
+          fn={prevStep}
+          label='Go Back'
+          style='bg-transparent hover:bg-transparent hover:text-gray-500 border-none text-gray-500'
+        />
+        <CustomedButton
+          typeButton='button'
+          fn={onSubmit}
+          label="Confirm"
+        />
       </div>
     </form>
   )
