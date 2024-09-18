@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { FormHeading } from '@components/atoms'
+import { CustomedButton, FormHeading } from '@components/atoms'
 
 type StepProps = {
   prevStep: () => void // Function to go back to the previous step
@@ -174,20 +174,17 @@ export default function Step3({
 
       {/* Navigation buttons */}
       <div className='flex justify-between'>
-        <button
-          type='button'
-          onClick={prevStep}
-          className='rounded-md px-4 py-2 text-gray-700 transition hover:font-bold hover:text-marine_blue'
-        >
-          Back
-        </button>
-        <button
-          type='button'
-          onClick={handleNext}
-          className='rounded-md bg-marine_blue px-6 py-3 text-white transition hover:bg-purplish_blue'
-        >
-          Next
-        </button>
+      <CustomedButton
+          typeButton='button'
+          fn={prevStep}
+          label='Go Back'
+          style='bg-transparent hover:bg-transparent hover:text-gray-500 border-none text-gray-500'
+        />
+        <CustomedButton
+          typeButton='button'
+          fn={handleNext}
+          label='Next'
+        />
       </div>
     </form>
   )
