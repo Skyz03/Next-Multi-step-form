@@ -80,7 +80,7 @@ export default function Step3({
             }`}
             onClick={() => handleAddOnChange('Online service')}
           >
-            <label className='flex items-center'>
+            <label className='flex items-center cursor-pointer'>
               <input
                 type='checkbox'
                 checked={selectedAddOns.includes('Online service')} // Show as checked if selected
@@ -113,7 +113,7 @@ export default function Step3({
             }`}
             onClick={() => handleAddOnChange('Larger storage')}
           >
-            <label className='flex items-center'>
+            <label className='flex items-center cursor-pointer'>
               <input
                 type='checkbox'
                 checked={selectedAddOns.includes('Larger storage')} // Show as checked if selected
@@ -146,7 +146,7 @@ export default function Step3({
             }`}
             onClick={() => handleAddOnChange('Customizable profile')}
           >
-            <label className='flex items-center'>
+            <label className='flex items-center cursor-pointer'>
               <input
                 type='checkbox'
                 checked={selectedAddOns.includes('Customizable profile')} // Show as checked if selected
@@ -174,7 +174,7 @@ export default function Step3({
 
       {/* Navigation buttons */}
       <div className='flex justify-between'>
-      <CustomedButton
+        <CustomedButton
           typeButton='button'
           fn={prevStep}
           label='Go Back'
