@@ -56,7 +56,7 @@ export default function Step2({
           <label className='text-marine_blue'>Monthly</label>
           <InputSwitch
             checked={billing === 'yearly'}
-            onChange={(e) => handleBillingChange(e.value)}
+            onChange={(e) => handleBillingChange(e.value ?? false)}
           />
           <label className='text-marine_blue'>Yearly</label>
         </div>
