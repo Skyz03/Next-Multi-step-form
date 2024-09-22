@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import MultiStepForm from '@/components/MultiStep'
+import MultiStepForm from '@components/MultiStep'
 
 // Define the type for the step object
 interface StepProps {

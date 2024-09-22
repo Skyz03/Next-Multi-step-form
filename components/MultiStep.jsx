@@ -7,17 +7,8 @@ import Step3 from '../app/form/Form3'
 import Step4 from '../app/form/Form4'
 import { useMultiFormContext } from '@context/MultiFormContext'
 
-interface MultiStepFormProps {
-  currentStep: number
-  setCurrentStep: (step: number) => void
-}
-
-const MultiStepForm: React.FC<MultiStepFormProps> = ({
-  currentStep,
-  setCurrentStep,
-}) => {
-  
-  const {formData,setFormData} = useMultiFormContext()// Store form data across steps
+const MultiStepForm = ({ currentStep, setCurrentStep }) => {
+  const { formData, setFormData } = useMultiFormContext() // Store form data across steps
 
   // Function to move to the next step
   const nextStep = () => setCurrentStep(currentStep + 1)

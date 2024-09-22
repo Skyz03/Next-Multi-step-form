@@ -16,15 +16,9 @@ export default function Step2({
   formData,
   setFormData,
 }: StepProps) {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm()
+  const { handleSubmit } = useForm()
 
-  
-  const {billing, setBilling, plan,  price, setPrice} = useMultiFormContext()
+  const { billing, setBilling, plan, price, setPrice } = useMultiFormContext()
 
   // Update billing and price
   const handleBillingChange = (checked: boolean) => {
@@ -56,7 +50,7 @@ export default function Step2({
           text='Personal Info'
           infoText='Please provide your name, email address, and phone number.'
         />
-       <CustomedCardList/>
+        <CustomedCardList />
         {/* Billing frequency options */}
         <div className='mt-4 flex items-center justify-center gap-4 bg-alabaster p-4'>
           <label className='text-marine_blue'>Monthly</label>
