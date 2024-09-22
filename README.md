@@ -1,54 +1,136 @@
-# Frontend Mentor - Multi-step form solution
+# Next.js Multi-Step Form Application
 
-This is a solution to the [Multi-step form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ). This project was built using **Next.js**, **TypeScript**, and **Tailwind CSS**. Frontend Mentor challenges help developers improve their coding skills by building realistic projects.
+This project is a **multi-step form application** built using **Next.js** with **TypeScript**, **Tailwind CSS**, and **PostCSS**. The application follows the atomic design principles and leverages React context for global state management.
 
-## Table of contents
+## Table of Contents
 
-- [Frontend Mentor - Multi-step form solution](#frontend-mentor---multi-step-form-solution)
-  - [Table of contents](#table-of-contents)
-  - [Overview](#overview)
-    - [The challenge](#the-challenge)
-    - [Screenshot](#screenshot)
-    - [Links](#links)
-  - [My process](#my-process)
-    - [Built with](#built-with)
-    - [What I learned](#what-i-learned)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Usage](#usage)
+- [Available Scripts](#available-scripts)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Overview
+---
 
-### The challenge
+## Installation
 
-Users should be able to:
+1. Clone the repository:
 
-- Complete each step of the form
-- Go back to previous steps to update their selections
-- See a summary of their selections on the final step and confirm their order
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
-- Receive form validation messages if:
-  - Required fields are missed
-  - The email address is not formatted correctly
-  - A step is submitted without valid input
+   ```bash
+   git clone https://github.com/your-username/next-multi-step-form.git
+   cd next-multi-step-form
+   ```
 
-### Screenshot
+2. Install the dependencies:
 
-![Multi-step form screenshot](./screenshot.jpg)
+   ```bash
+   npm install
+   ```
 
-> Add a screenshot of your project by taking a full or partial screenshot and uploading it to your project directory.
+3. Run the development server:
 
-### Links
+   ```bash
+   npm run dev
+   ```
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## My process
+---
 
-### Built with
+## Project Structure
 
-- **Next.js** – React framework for server-side rendering
-- **TypeScript** – For type-safe JavaScript
-- **Tailwind CSS** – Utility-first CSS framework
-- **React Hooks** – For managing form state and navigation between steps
-- **Mobile-first workflow** – Ensuring responsiveness across devices
+```bash
+├── app/
+│   ├── form/                # Components for different form steps
+│   ├── layout.tsx           # Layout component
+│   └── page.tsx             # Main page component
+│
+├── components/
+│   ├── atoms/               # Small reusable components
+│   ├── molecules/           # More complex components composed of atoms
+│   └── templates/           # High-level templates like MultiForm
+│
+├── context/
+│   └── MultiFormContext.tsx  # Global state for multi-step forms
+│
+├── interfaces/              # TypeScript interfaces
+│   └── commons.ts           # Common interfaces used in the app
+│
+├── public/
+│   ├── assets/              # Static assets (images, icons, etc.)
+│
+├── styles/
+│   └── globals.css          # Global CSS
+│
+├── utils/
+│   ├── constants.ts         # Application constants
+│   └── helpers.ts           # Helper functions
+│
+├── .eslintrc.js             # ESLint configuration
+├── tailwind.config.ts       # Tailwind CSS configuration
+├── tsconfig.json            # TypeScript configuration
+└── package.json             # Project metadata and scripts
+```
 
-### What I learned
+---
+
+## Features
+
+- Multi-step form functionality
+- Context API for managing form state across steps
+- Responsive design using **Tailwind CSS**
+- TypeScript for static type checking
+- Atomic design structure for reusable components
+
+---
+
+## Usage
+
+To start the application in development mode, run:
+
+```bash
+npm run dev
+```
+
+The app will be available at [http://localhost:3000](http://localhost:3000).
+
+### Form Flow
+
+The application includes a **multi-step form** under the `/app/form/` directory. Each step of the form is a separate component (`Form1.tsx`, `Form2.tsx`, etc.). The form flow is managed via the `MultiFormContext`, ensuring that state persists between form steps.
+
+---
+
+## Available Scripts
+
+In the project directory, you can run the following commands:
+
+- **`npm run dev`**: Runs the app in development mode.
+- **`npm run build`**: Builds the app for production.
+- **`npm run lint`**: Lints the codebase using ESLint.
+- **`npm run format`**: Formats the codebase using Prettier.
+
+---
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org/) – React framework for server-rendered apps.
+- [TypeScript](https://www.typescriptlang.org/) – Static typing for JavaScript.
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS framework.
+- [PostCSS](https://postcss.org/) – A tool for transforming CSS.
+- [React Context API](https://reactjs.org/docs/context.html) – State management across form steps.
+- [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) – Modular, reusable component architecture.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please submit a pull request or open an issue to discuss any changes.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
