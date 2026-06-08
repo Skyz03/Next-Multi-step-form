@@ -1,4 +1,4 @@
-# Next.js Multi-Step Form Applications
+# Next.js Multi-Step Form Application
 
 This project is a **multi-step form application** built using **Next.js** with **TypeScript**, **Tailwind CSS**, and **PostCSS**. The application follows the atomic design principles and leverages React context for global state management.
 
